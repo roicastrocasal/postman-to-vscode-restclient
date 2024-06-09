@@ -1,34 +1,9 @@
-import json
 import argparse
 import os
-from utils.print_utils import print_item, print_file_variables
+from lib.postman_to_vscode_restclient import postman_to_http
 from pathlib import Path
 
-
-
-
-def postman_to_http(input_file_path, output_file_path):
-    with open(input_file_path, 'r') as f:
-        postman_collection = json.load(f)
-       
-        if 'item' in postman_collection and len(postman_collection['item']) > 0 and 'item' in postman_collection['item'][0]:
-            print(f"Reading {input_file_path}")
-            for chapter in postman_collection['item']:
-                chapter_output_filename = os.path.join(output_file_path,chapter['name']+".http")
-                with open(chapter_output_filename, 'w') as f:
-                    
-                    print_file_variables(f)
-
-                    # itemsColl = [item for items in postman_collection['item'] for item in items['item']]
-                    itemsColl = chapter['item']
-                    for item in itemsColl:
-                    
-                        print_item(f, item)
-                print(f"Saving {chapter_output_filename}")
-
-        else: 
-            print(f"{input_file_path} is not a supported postman format")
-            
+        
 
 def main():
 
