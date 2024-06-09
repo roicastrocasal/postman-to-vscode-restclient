@@ -13,16 +13,18 @@ def postman_to_http(input_file_path, output_file_path):
        
         if 'item' in postman_collection and len(postman_collection['item']) > 0 and 'item' in postman_collection['item'][0]:
             print(f"Reading {input_file_path}")
-            with open(output_file_path, 'w') as f:
-                
-                print_file_variables(f)
+            for chapter in postman_collection['item']:
+                chapter_output_filename = os.path.join(output_file_path,chapter['name']+".http")
+                with open(chapter_output_filename, 'w') as f:
+                    
+                    print_file_variables(f)
 
-                itemsColl = [item for items in postman_collection['item'] for item in items['item']]
-
-                for item in itemsColl:
-                   
-                    print_item(f, item)
-            print(f"Saving {output_file_path}")
+                    # itemsColl = [item for items in postman_collection['item'] for item in items['item']]
+                    itemsColl = chapter['item']
+                    for item in itemsColl:
+                    
+                        print_item(f, item)
+                print(f"Saving {chapter_output_filename}")
 
         else: 
             print(f"{input_file_path} is not a supported postman format")
@@ -48,9 +50,10 @@ def main():
     # For each postman file a http file is created
     for postman_file in postman_files:
         name = Path(postman_file).name
-        name_http = name.replace(".json", ".http")
-        file_http = os.path.join(httpdir, name_http)
-        postman_to_http(postman_file, file_http)    
+        name_http = name.replace(".json", "")
+        dir_http = os.path.join(httpdir, name_http)
+        os.makedirs(dir_http, exist_ok=True)
+        postman_to_http(postman_file, dir_http)    
 
 
            
