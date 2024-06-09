@@ -1,6 +1,6 @@
 import argparse
 import os
-from lib.postman_to_vscode_restclient import postman_to_http
+from libpostmanhttp.postman_to_vscode_restclient import postman_to_http
 from pathlib import Path
 
         
