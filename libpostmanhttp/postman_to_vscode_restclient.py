@@ -46,7 +46,7 @@ def print_method_url(f, item):
         
     f.write(f"{method} {url}")
     f.write(f"{params}")
-    f.write("HTTP/1.1\n")
+    f.write("\n")
 
 def print_headers(f, item):
     request = item['request']
@@ -79,7 +79,7 @@ def print_item(f, item):
     print_end_method(f)
 
 def postman_to_http(input_file_path, output_file_path):
-    with open(input_file_path, 'r') as f:
+    with open(input_file_path, mode='r', encoding="utf8") as f:
         postman_collection = json.load(f)
        
         if 'item' in postman_collection and len(postman_collection['item']) > 0 and 'item' in postman_collection['item'][0]:
@@ -87,7 +87,7 @@ def postman_to_http(input_file_path, output_file_path):
             for chapter in postman_collection['item']:
                 
                 chapter_output_filename = os.path.join(output_file_path,chapter['name']+".http")
-                with open(chapter_output_filename, 'w') as f:
+                with open(chapter_output_filename,  mode='w', encoding="utf8") as f:
                     
                     print_file_variables(f)
 
