@@ -42,7 +42,7 @@ def print_method_url(f, item):
     if len(request['url']['query']) > 0 :
         query = request['url']['query']
         params = "\n?"
-        params += "&".join([f"{param['key']}={{{{{param['key']}}}}}\n" for param in query])
+        params += "\n&".join([f"{param['key']}={{{{{param['key']}}}}}" for param in query])
         
     f.write(f"{method} {url}")
     f.write(f"{params}")
